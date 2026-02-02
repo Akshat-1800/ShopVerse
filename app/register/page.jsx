@@ -2,6 +2,7 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import { useSearchParams,useRouter } from "next/navigation";
+import { signIn } from 'next-auth/react';
 
 
 
@@ -57,11 +58,26 @@ const role =
       return;
     }
 
-    if(role==="seller"){
-      router.push('/seller');
-    }else{
-      router.push('/');
-    }
+    // Auto-login after register
+// const loginRes = await signIn("credentials", {
+//   redirect: false,
+//   email: formData.email,
+//   password: formData.password,
+// });
+
+// if (loginRes?.error) {
+//   alert("Registered but login failed");
+//   router.push("/login");
+//   return;
+// }
+
+// if (role === "seller") {
+//   router.push("/seller");
+// } else {
+//   router.push("/");
+// }
+router.push("/login");
+
 
   } catch (error) {
     console.error("Register error:", error);

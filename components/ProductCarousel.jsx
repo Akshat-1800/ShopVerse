@@ -17,31 +17,31 @@ const products = [
     id: 1,
     title: "Wireless Headphones",
     price: "₹2,999",
-    image: "/products/next.svg",
+    image: "/products/product.jpeg",
   },
   {
     id: 2,
     title: "Smart Watch",
     price: "₹4,499",
-    image: "/products/next.svg",
+    image: "/products/product.jpeg",
   },
   {
     id: 3,
     title: "Bluetooth Speaker",
     price: "₹1,999",
-    image: "/products/next.svg",
+    image: "/products/product.jpeg",
   },
   {
     id: 4,
     title: "Gaming Mouse",
     price: "₹1,299",
-    image: "/products/next.svg",
+    image: "/products/product.jpeg",
   },
   {
     id: 5,
     title: "Mechanical Keyboard",
     price: "₹3,999",
-    image: "/products/next.svg",
+    image: "/products/product.jpeg",
   },
 ]
 

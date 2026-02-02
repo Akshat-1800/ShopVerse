@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 
 
 const Page = () => {
+  const router = useRouter();
   const [userType, setUserType] = useState('buyer') // 'buyer' or 'seller'
   const [formData, setFormData] = useState({
     email: '',
@@ -22,21 +23,29 @@ const Page = () => {
   const handleSubmit = async (e) => {
   e.preventDefault();
 
-  const role =
-    userType === "buyer" ? "customer" : "seller";
+  const role = userType === "buyer" ? "customer" : "seller";
 
-  try {
-    await signIn("credentials", {
-      email: formData.email,
-      password: formData.password,
-      role,                 
-      redirect: true,
-      callbackUrl: "/redirect",
-    });
-  } catch (error) {
-    console.error("Login failed", error);
+  const res = await signIn("credentials", {
+    email: formData.email,
+    password: formData.password,
+    role,
+    redirect: false, // ✅ VERY IMPORTANT
+  });
+
+  // ❌ Wrong credentials
+  if (res?.error) {
+    alert("Invalid email or password");
+    return;
+  }
+
+  // ✅ Successful login
+  if (role === "seller") {
+    router.push("/seller");
+  } else {
+    router.push("/");
   }
 };
+
 
   return (
     <div className="min-h-screen bg-linear-to-br from-blue-50 via-purple-50 to-pink-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">

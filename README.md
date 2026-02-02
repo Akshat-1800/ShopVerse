@@ -1,36 +1,206 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# 🛒 ShopVerse – Full Stack E-Commerce Web Application
 
-First, run the development server:
+ShopVerse is a full-stack e-commerce web application built using **Next.js (App Router)**, **MongoDB**, and **NextAuth.js**.  
+The project is developed **for learning and demonstration purposes**, focusing on real-world application architecture, authentication, role-based access control, cart & order flow, and payment integration.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## 🚀 Features
+
+### 👤 Authentication & Authorization
+- User authentication using **NextAuth.js**
+- Role-based access:
+  - **Customer**
+  - **Seller**
+  - **Admin**
+- Secure session handling with JWT
+- Auto-login after successful registration
+- Protected routes using **Next.js Middleware**
+
+---
+
+### 🛍️ Customer Features
+- Browse products
+- Add products to cart
+- Update and remove cart items
+- Checkout with delivery address
+- View order history
+- Secure online payment using **Razorpay**
+- Stock updates after successful payment
+
+---
+
+### 🏪 Seller Features
+- Seller-specific dashboard
+- Add new products
+- Manage own listed products
+- Role-based redirection after login
+
+---
+
+### 🛠️ Admin Features
+- Admin-only access
+- View all users
+- View all products
+- Delete products
+- Basic administrative control
+
+---
+
+### 💳 Payment Integration
+- Integrated **Razorpay (Test Mode)**
+- Secure payment verification
+- Order status updated only after successful payment
+- Stock reduced only after payment verification
+
+---
+
+## 🧑‍💻 Tech Stack
+
+### Frontend
+- **Next.js 13+ (App Router)**
+- **React**
+- **Tailwind CSS**
+
+### Backend
+- **Next.js API Routes**
+- **MongoDB Atlas**
+- **Mongoose**
+
+### Authentication
+- **NextAuth.js**
+- Credentials Provider
+- JWT-based sessions
+
+### Payments
+- **Razorpay**
+
+---
+
+## 📂 Project Structure (Simplified)
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+app/
+├── api/
+│   ├── auth/
+│   ├── register/
+│   ├── cart/
+│   ├── orders/
+│   ├── payment/
+│   └── admin/
+├── login/
+├── register/
+├── products/
+├── cart/
+├── checkout/
+├── payment/
+├── orders/
+└── seller/
+models/
+├── User.js
+├── Product.js
+└── Orders.js
+lib/
+└── db.js
+middleware.js
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+````
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## ⚙️ Environment Variables
 
-To learn more about Next.js, take a look at the following resources:
+Create a `.env.local` file in the root directory:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```env
+MONGODB_URI=your_mongodb_connection_string
+NEXTAUTH_SECRET=your_nextauth_secret
+NEXTAUTH_URL=http://localhost:3000
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+RAZORPAY_KEY_ID=your_razorpay_key_id
+RAZORPAY_KEY_SECRET=your_razorpay_key_secret
+````
 
-## Deploy on Vercel
+⚠️ **Do not commit `.env.local` to GitHub.**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## ▶️ How to Run Locally
+
+```bash
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+```
+
+Open 👉 `http://localhost:3000`
+
+---
+
+## 🧪 Demo Notes
+
+* Razorpay is used in **test mode**
+* Images are hosted on **Cloudinary** 
+* Orders, users, and products are stored in MongoDB Atlas
+
+---
+
+## ⚠️ Limitations (Intentional – Demo Purpose)
+
+This project is built for **learning and demonstration**, not full production use.
+
+### Current Limitations:
+
+* ❌ Product ratings and reviews are **not implemented**
+* ❌ Limited number of products (demo data only)
+* ❌ Shipping and delivery status tracking is **not available**
+* ❌ No order cancellation or refund flow
+* ❌ Admin controls are basic (no analytics/dashboard)
+* ❌ No email notifications
+* ❌ No password reset or email verification
+
+
+---
+
+## 📌 Future Enhancements
+
+* Product reviews & ratings
+* Order shipping lifecycle (Shipped / Delivered)
+* Advanced admin dashboard
+* Email notifications
+* Password reset & email verification
+* Better seller analytics
+* Webhooks for payment reliability
+* Performance optimizations
+
+---
+
+## 🎓 Project Purpose
+
+This project was created as a **learning-oriented full-stack application** to understand:
+
+* Real-world authentication flows
+* Role-based authorization
+* Secure payments
+* Backend-driven order lifecycle
+* Clean Next.js architecture
+
+---
+
+## 👨‍💻 Author
+
+**Akshat Jaiswal**
+Full-Stack Developer | Computer Science Student
+
+---
+
+## 📜 License
+
+This project is for **educational purposes only**.
+
+
+```
