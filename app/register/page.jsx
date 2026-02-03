@@ -1,19 +1,14 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useState, Suspense } from 'react'
 import Link from 'next/link'
 import { useSearchParams,useRouter } from "next/navigation";
 import { signIn } from 'next-auth/react';
 
-
-
-
-
-
-const RegisterPage = () => {
+const RegisterForm = () => {
   const router=useRouter();
   const searchParams = useSearchParams();
-const roleFromUrl = searchParams.get("role"); // "buyer" | "seller"
-const role =
+  const roleFromUrl = searchParams.get("role"); // "buyer" | "seller"
+  const role =
   roleFromUrl === "seller" ? "seller" : "customer";
   const [formData, setFormData] = useState({
     email: '',
@@ -172,6 +167,25 @@ router.push("/login");
         </div>
       </div>
     </div>
+  )
+}
+
+const RegisterPage = () => {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-linear-to-br from-blue-50 via-purple-50 to-pink-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-md w-full">
+          <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
+            <div className="bg-linear-to-r from-blue-600 to-purple-600 px-8 py-10 text-center">
+              <h2 className="text-3xl font-bold text-white mb-2">Loading...</h2>
+              <p className="text-blue-100">Please wait</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    }>
+      <RegisterForm />
+    </Suspense>
   )
 }
 
