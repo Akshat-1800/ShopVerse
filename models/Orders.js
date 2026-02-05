@@ -43,6 +43,14 @@ const orderSchema = new mongoose.Schema(
     razorpayOrderId: {
       type: String,
     },
+    name: {
+      type: String,
+      
+  },
+    phone: {
+      type: String,
+      maxlength: 13,
+  },
   },
   { timestamps: true }
 );

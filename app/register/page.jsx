@@ -3,6 +3,7 @@ import React, { useState, Suspense } from 'react'
 import Link from 'next/link'
 import { useSearchParams,useRouter } from "next/navigation";
 import { signIn } from 'next-auth/react';
+import { toast } from 'react-toastify';
 
 const RegisterForm = () => {
   const router=useRouter();
@@ -28,7 +29,8 @@ const RegisterForm = () => {
   e.preventDefault();
 
   if (formData.password !== formData.confirmPassword) {
-    alert("Passwords do not match");
+    // alert("Passwords do not match");
+    toast.error("Passwords do not match");
     return;
   }
 
@@ -49,7 +51,7 @@ const RegisterForm = () => {
     const data = await res.json();
 
     if (!res.ok) {
-      alert(data.message || "Registration failed");
+      toast.error(data.message || "Registration failed");
       return;
     }
 
@@ -76,7 +78,8 @@ router.push("/login");
 
   } catch (error) {
     console.error("Register error:", error);
-    alert("Something went wrong");
+    // alert("Something went wrong");
+    toast.error("Something went wrong");
   }
 };
 
@@ -121,8 +124,13 @@ router.push("/login");
                 type="password"
                 id="password"
                 name="password"
+               
                 value={formData.password}
                 onChange={handleInputChange}
+                 minLength={6}
+                maxLength={15}
+                pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,15}$"
+                title="Password must be 6–15 characters long, include letters, numbers, and at least one special character."
                 placeholder="••••••••"
                 className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                 required

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
+import { toast } from "react-toastify";
 
 const ProductViewPage = () => {
   const { id } = useParams();
@@ -32,31 +33,51 @@ const ProductViewPage = () => {
 
     fetchProduct();
   }, [id]);
-
-  const handleAddToCart = async () => {
-    setAdding(true);
-    try {
-      const res = await fetch(`/api/Cart`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          productId: product._id,
-          quantity: quantity,
-        }),
-      });
-
-      if (!res.ok) {
-        throw new Error("Failed to add to cart");
-      }
-
-      alert("Added to cart");
-    } catch (err) {
-      console.error(err);
-      alert("Could not add to cart");
-    } finally {
-      setAdding(false);
+  useEffect(() => {
+  if (product) {
+    if (product.stock === 0) {
+      setQuantity(1);
+    } else if (quantity > product.stock) {
+      setQuantity(product.stock);
     }
-  };
+  }
+}, [product, quantity]);
+
+ const handleAddToCart = async () => {
+  if (product.stock === 0) {
+    toast.error("Product is out of stock");
+    return;
+  }
+
+  if (quantity > product.stock) {
+    toast.error(`Only ${product.stock} items available`);
+    return;
+  }
+
+  setAdding(true);
+  try {
+    const res = await fetch(`/api/Cart`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        productId: product._id,
+        quantity,
+      }),
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to add to cart");
+    }
+
+    toast.success("Added to cart");
+  } catch (err) {
+    console.error(err);
+    toast.error("Could not add to cart");
+  } finally {
+    setAdding(false);
+  }
+};
+
 
   if (loading) {
     return (
@@ -178,7 +199,9 @@ const ProductViewPage = () => {
             {/* Quantity Selector */}
             <div className="mb-8">
               <h3 className="text-sm font-semibold text-slate-800 mb-3">Quantity</h3>
-              <div className="inline-flex items-center bg-slate-100 rounded-xl">
+              <div className={`inline-flex items-center bg-slate-100 rounded-xl ${
+    product.stock === 0 ? "opacity-50 pointer-events-none" : ""
+  }`}>
                 <button
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
                   className="w-12 h-12 flex items-center justify-center text-slate-600 hover:bg-slate-200 rounded-l-xl transition-colors"
@@ -189,7 +212,11 @@ const ProductViewPage = () => {
                 </button>
                 <span className="w-16 text-center font-semibold text-slate-800 text-lg">{quantity}</span>
                 <button
-                  onClick={() => setQuantity(quantity + 1)}
+                  onClick={() =>
+  setQuantity((prev) => Math.min(prev + 1, product.stock))
+}
+disabled={product.stock === 0 || quantity >= product.stock}
+
                   className="w-12 h-12 flex items-center justify-center text-slate-600 hover:bg-slate-200 rounded-r-xl transition-colors"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

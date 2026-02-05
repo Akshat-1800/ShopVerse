@@ -22,6 +22,17 @@ const userSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Product',
         }],
+        name: {
+            type: String,
+        },
+        phone: {
+            type: String,
+            maxlength: 13,
+        },
+        address: {
+            type: String,
+        },
+        
     },
   { timestamps: true }
 );

@@ -14,11 +14,19 @@ export async function POST(req) {
 
     await dbConnect();
 
-    const { address } = await req.json();
+    const { address,name, phone } = await req.json();
 
-    if (!address) {
+    if (!address || !name || !phone) {
       return NextResponse.json(
-        { error: "Address is required" },
+        { error: "Address, name, and phone are required" },
+        { status: 400 }
+      );
+    }
+    
+    const updatedPhone = phone.startsWith("+91") && phone.length === 13 ? phone : null;
+    if (!updatedPhone) {
+      return NextResponse.json(
+        { error: "Phone number must be +91 followed by 10 digits" },
         { status: 400 }
       );
     }
@@ -50,11 +58,13 @@ export async function POST(req) {
       items: orderItems,
       totalAmount,
       address,
+      name: name,
+      phone: updatedPhone,
     });
 
     // Clear cart after order creation
-    cart.items = [];
-    await cart.save();
+    // cart.items = [];
+    // await cart.save();
 
     return NextResponse.json({
       message: "Order created",

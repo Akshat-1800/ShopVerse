@@ -4,10 +4,21 @@ import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
 
 export async function POST(request) {
+  const passwordRegex =
+  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,15}$/;
   try {
     await dbConnect();
 
     const { email, password, role } = await request.json();
+    if (!passwordRegex.test(password)) {
+  return NextResponse.json(
+    {
+      message:
+        "Password must be 6–15 chars, include letters, numbers & a special character",
+    },
+    { status: 400 }
+  );
+    }
 
     
     const existingUser = await User.findOne({ email });

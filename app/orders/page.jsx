@@ -9,15 +9,21 @@ const OrdersPage = () => {
 
   useEffect(() => {
     const fetchOrders = async () => {
-      const res = await fetch("/api/orders");
-      const data = await res.json();
-      setOrders(data.orders || []);
-      setLoading(false);
+      try {
+        const res = await fetch("/api/orders");
+        const data = await res.json();
+        setOrders(data.orders || []);
+      } catch (error) {
+        console.error("Failed to fetch orders:", error);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchOrders();
   }, []);
 
+  /* ---------------- Loading ---------------- */
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -26,28 +32,40 @@ const OrdersPage = () => {
     );
   }
 
-  if (orders.length === 0) {
+  /* ---------------- Filter Completed Orders ---------------- */
+  const completedOrders = orders.filter(
+    (order) => order.status !== "PENDING"
+  );
+
+  /* ---------------- No Completed Orders ---------------- */
+  if (completedOrders.length === 0) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center">
-        <h2 className="text-2xl font-bold mb-2">No orders yet</h2>
-        <Link href="/products" className="text-blue-600">
-          Start shopping
+        <h2 className="text-2xl font-bold mb-2">
+          No completed orders yet
+        </h2>
+        <p className="text-gray-500 mb-4">
+          Complete a purchase to see it here
+        </p>
+        <Link href="/cart" className="text-blue-600">
+          Go to cart
         </Link>
       </div>
     );
   }
 
+  /* ---------------- Orders History ---------------- */
   return (
     <div className="max-w-5xl mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6">My Orders</h1>
+      <h1 className="text-3xl font-bold mb-6">Order History</h1>
 
       <div className="space-y-6">
-        {orders.map((order) => (
+        {completedOrders.map((order) => (
           <div
             key={order._id}
             className="border rounded-lg p-5 bg-white"
           >
-            {/* Order Header */}
+            {/* Header */}
             <div className="flex justify-between mb-4">
               <div>
                 <p className="text-sm text-gray-500">
@@ -57,12 +75,11 @@ const OrdersPage = () => {
                   {new Date(order.createdAt).toLocaleDateString()}
                 </p>
               </div>
+
               <span
                 className={`px-3 py-1 rounded-full text-sm font-semibold ${
                   order.status === "PAID"
                     ? "bg-green-100 text-green-700"
-                    : order.status === "PENDING"
-                    ? "bg-yellow-100 text-yellow-700"
                     : "bg-red-100 text-red-700"
                 }`}
               >

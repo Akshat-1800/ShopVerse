@@ -162,7 +162,7 @@ const page = () => {
               <div className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
                 <div className="h-48 bg-linear-to-br from-blue-400 to-blue-600"></div>
                 <div className="p-6">
-                  <h3 className="text-xl font-bold text-slate-900 mb-1">Sarah Johnson</h3>
+                  <h3 className="text-xl font-bold text-slate-900 mb-1">Unknown</h3>
                   <p className="text-blue-600 font-semibold mb-3">Founder & CEO</p>
                   <p className="text-slate-600">
                     Visionary leader with 15 years of e-commerce experience, driving innovation and growth.
@@ -172,7 +172,7 @@ const page = () => {
               <div className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
                 <div className="h-48 bg-linear-to-br from-purple-400 to-purple-600"></div>
                 <div className="p-6">
-                  <h3 className="text-xl font-bold text-slate-900 mb-1">Michael Chen</h3>
+                  <h3 className="text-xl font-bold text-slate-900 mb-1">Unknown</h3>
                   <p className="text-purple-600 font-semibold mb-3">Head of Operations</p>
                   <p className="text-slate-600">
                     Ensures seamless operations and timely delivery for all our valued customers.
@@ -182,7 +182,7 @@ const page = () => {
               <div className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
                 <div className="h-48 bg-linear-to-br from-pink-400 to-pink-600"></div>
                 <div className="p-6">
-                  <h3 className="text-xl font-bold text-slate-900 mb-1">Emily Rodriguez</h3>
+                  <h3 className="text-xl font-bold text-slate-900 mb-1">Unknown</h3>
                   <p className="text-pink-600 font-semibold mb-3">Customer Success Lead</p>
                   <p className="text-slate-600">
                     Passionate about creating exceptional experiences and building lasting relationships.

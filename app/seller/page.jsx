@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 const SellerPage = () => {
   const [productData, setProductData] = useState({
@@ -65,7 +66,8 @@ const SellerPage = () => {
       const imageUrl = await uploadImage();
 
       if (!imageUrl) {
-        alert("Please upload an image");
+        // alert("Please upload an image");
+        toast.error("Please upload an image");
         return;
       }
 
@@ -84,12 +86,11 @@ const SellerPage = () => {
       const data = await res.json();
 
       if (!res.ok) {
-        alert(data.error || "Failed to add product");
+        toast.error(data.error || "Failed to add product");
         return;
       }
 
-      alert("Product added successfully!");
-
+      toast.success("Product added successfully!");
       // Reset
       setProductData({
         name: "",

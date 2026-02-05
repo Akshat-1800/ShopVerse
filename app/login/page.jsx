@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { toast } from 'react-toastify';
 
 
 const Page = () => {
@@ -34,7 +35,8 @@ const Page = () => {
 
   // ❌ Wrong credentials
   if (res?.error) {
-    alert("Invalid email or password");
+    // alert("Invalid email or password");
+    toast.error("Invalid email or password");
     return;
   }
 

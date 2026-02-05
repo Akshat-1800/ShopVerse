@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 import dbConnect from "@/lib/db";
 import Cart from "@/models/Cart";
+import Product from "@/models/Product";
 
 export async function DELETE(req, { params }) {
   try {
